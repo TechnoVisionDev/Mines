@@ -1,0 +1,8 @@
+.board {
+    display: grid;
+    margin: 2rem auto;
+    background-color: #0f212e;
+    padding: 5px;
+    justify-content: center;
+    width: 37rem;
+}
