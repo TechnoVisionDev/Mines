@@ -1,10 +1,10 @@
 
 import Row from './Row';
-import './Board.css';
+import styles from './Board.module.css';
 
 function Board() {
     return (
-        <div className="board">
+        <div className={styles.board}>
             <Row />
             <Row />
             <Row />

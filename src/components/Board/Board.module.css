@@ -1,0 +1,7 @@
+.board {
+    display: grid;
+    justify-content: center;
+    background-color: #0f212e;
+    padding: 0.5rem 4rem;
+    border-radius: 0 6px 6px 0;
+}

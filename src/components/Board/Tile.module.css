@@ -1,27 +1,27 @@
-button {
+.button {
     height: 6.8rem;
     width: 6.8rem;
     background-color: #2f4553;
     border-radius: 8px;
     margin: 3px 4px;
-    cursor: pointer;
     border: none;
-    border-bottom: 4px inset #223643;
+    border-bottom: 5px inset #223643;
 }
 
-button:not(.clicked) {
+.button:not(.clicked) {
     position: relative;
     top: 0;
     transition: top ease 0.2s
 }
 
-button:not(.clicked):hover {
+.button:not(.clicked):hover {
     background-color: #566f86;
+    cursor: pointer;
     top: -2px;
 }
 
 .clicked {
-    border-color: #071824;
+    border-bottom: 5px inset transparent;
 }
 
 .gem {
