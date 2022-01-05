@@ -1,5 +1,5 @@
-import Board from "./components/Board/Board";
-import Settings from "./components/Settings/Settings";
+import Board from "./Board/Board";
+import Settings from "./Settings/Settings";
 
 import styles from './App.module.css';
 
