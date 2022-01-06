@@ -1,11 +1,15 @@
 import BetForm from './BetForm';
 import styles from './Settings.module.css';
 
-function Settings() {
+function Settings(props) {
+    const startHandler = (data) => {
+        props.onStart(data);
+    }
+
     return (
         <div className={styles.settings}>
             <h1 className={styles.title}>Mines</h1>
-            <BetForm />
+            <BetForm onStart={startHandler} />
         </div>
     );
 }

@@ -1,14 +1,27 @@
+import {useState} from 'react';
+
 import styles from './BetForm.module.css';
 
-function BetForm() {
+function BetForm(props) {
+    const [enteredBet, setEnteredBet] = useState(0.00);
+    const [enteredBombs, setEnteredBombs] = useState(3);
+    const [buttonText, setButtonText] = useState('Bet');
+    const betChangehandler = (event) => setEnteredBet(event.target.value);
+    const bombsChangehandler = (event) => setEnteredBombs(event.target.value);
+
     const submitHandler = (event) => {
         event.preventDefault();
+        const data = {
+            bet: +enteredBet,
+            bombs: +enteredBombs,
+        }
+        props.onStart(data);
+        setButtonText('Cashout');
     }
 
     const options = []
     for (let i=1; i<25; i++) {
-        if (i === 3) { options.push(<option key={i} value={i} defaultValue>{i}</option>); } 
-        else { options.push(<option key={i} value={i}>{i}</option>); }
+        options.push(<option key={i} value={i}>{i}</option>); 
     }
 
     return (
@@ -23,17 +36,22 @@ function BetForm() {
                     step='0.01'
                     min='0'
                     max='10000000'
-                    required
                     title="Please enter Alphabets."
+                    onChange={betChangehandler}
                 />
             </div>
             <div className={styles.input}>
                 <label htmlFor="mines">Mines</label>
-                <select name="mines" className={`${styles.inputBox} ${styles.mines}`}>
+                <select 
+                    name="mines" 
+                    defaultValue='3' 
+                    className={`${styles.inputBox} ${styles.mines}`}
+                    onChange={bombsChangehandler}
+                >
                     {options}
                 </select>
             </div>
-            <button type="submit" className={styles.startButton}>Bet</button>
+            <button type="submit" className={styles.startButton}>{buttonText}</button>
         </form>
     );
 }

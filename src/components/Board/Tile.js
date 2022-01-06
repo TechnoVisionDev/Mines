@@ -5,7 +5,7 @@ import explosion from '../../assets/audio/bomb.wav';
 import success from '../../assets/audio/gem.wav';
 import styles from './Tile.module.css'
 
-function Tile() {
+function Tile(props) {
     const [playExposion] = useSound(explosion);
     const [playSuccess] = useSound(success);
 
@@ -14,8 +14,7 @@ function Tile() {
 
     const clickHandler = () => {
         if (!isClicked) {
-            const num = Math.floor(Math.random() * 10 + 1)
-            if (num === 1) {
+            if (props.bomb) {
                 setType('bomb');
                 playExposion();
             } else {
