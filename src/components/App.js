@@ -2,21 +2,35 @@ import {useState} from 'react';
 
 import Board from "./Board/Board";
 import Settings from "./Settings/Settings";
+import GameContext from '../store/game-context';
 import styles from './App.module.css';
 
 function App() {
-  const [isStarted, setStart] = useState(false);
+
+  const [firstGame, setFirstGame] = useState(true);
+  const [isRunning, setRunning] = useState(false);
   const [gameData, setGameData] = useState({bet:0, bombs:3});
-  const startHandler = (data) => {
-    setStart(true);
+  
+  const startGame = (data) => {
     setGameData(data);
+    setRunning(true);
+    if (firstGame) { setFirstGame(false); }
   }
 
   return (
-    <section className={styles.game}>
-      <Settings onStart={startHandler} />
-      <Board isStarted={isStarted} gameData={gameData} />
-    </section>
+    <GameContext.Provider value={
+      {
+        firstGame: firstGame,
+        isRunning: isRunning,
+        startFirstGame: () => setFirstGame(false),
+        endGame: () => setRunning(false)
+      }
+    }>
+      <section className={styles.game}>
+        <Settings onStart={startGame} />
+        <Board gameData={gameData} />
+      </section>
+    </GameContext.Provider>
   );
 }
 

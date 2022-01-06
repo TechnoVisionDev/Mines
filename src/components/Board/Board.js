@@ -1,37 +1,20 @@
+import { useContext } from 'react';
+
 import Tile from './Tile';
 import DummyBoard from './DummyBoard';
+import GameContext from '../../store/game-context';
 import styles from './Board.module.css';
 
+let tiles = [];
+
 function Board(props) {
-    if (!props.isStarted) {
-        return (
-            <DummyBoard />
-        );
+    const ctx = useContext(GameContext);
+    if (ctx.firstGame) {
+        return (<DummyBoard />);
     }
 
-    const tiles = [];
-    const board = Array.from(Array(5), _ => Array(5).fill(false));
-    let maxBombs = props.gameData.bombs;
-    if (props.gameData.bombs > 12) { maxBombs = 25 - maxBombs; }
-
-    let bombs = 0;
-    while (bombs < maxBombs){
-        const x = Math.floor(Math.random() * 5);
-        const y = Math.floor(Math.random() * 5);
-        if (board[x][y] === false) {
-            console.log(x, y);
-            board[x][y] = true;
-            bombs++;
-        }
-    }
-
-    for (let i=0; i<5; i++) {
-        tiles[i] = [];
-        for (let j=0; j<5; j++) {
-            let hasBomb = board[i][j];
-            if (props.gameData.bombs > 12) { hasBomb = !hasBomb };
-            tiles[i].push(<Tile key={j} bomb={hasBomb} />);
-        }
+    if (ctx.isRunning) {
+        generateNewBoard(props.gameData);
     }
 
     return (
@@ -43,6 +26,31 @@ function Board(props) {
             <div>{tiles[4]}</div>
         </div>
     );
+}
+
+function generateNewBoard(gameData) {
+    const board = Array.from(Array(5), _ => Array(5).fill(false));
+    let maxBombs = gameData.bombs;
+    if (maxBombs > 12) { maxBombs = 25 - maxBombs; }
+
+    let bombs = 0;
+    while (bombs < maxBombs){
+        const x = Math.floor(Math.random() * 5);
+        const y = Math.floor(Math.random() * 5);
+        if (board[x][y] === false) {
+            board[x][y] = true;
+            bombs++;
+        }
+    }
+
+    for (let i=0; i<5; i++) {
+        tiles[i] = [];
+        for (let j=0; j<5; j++) {
+            let hasBomb = board[i][j];
+            if (gameData.bombs > 12) { hasBomb = !hasBomb };
+            tiles[i].push(<Tile key={Date.now() + '-' + j} bomb={hasBomb} />);
+        }
+    }
 }
 
 export default Board;

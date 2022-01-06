@@ -35,3 +35,19 @@
     background-size: 4.5rem;
     background-color: #071824;
 }
+
+.gem:not(.gem-revealed):active, .bomb:not(.bomb-revealed):active {
+    background-size: 4.3rem;
+}
+
+.gem-revealed {
+    background: url('/src/assets/gem-revealed.svg') center no-repeat;
+    background-size: 3rem;
+    background-color: #071824;
+}
+
+.bomb-revealed {
+    background: url('/src/assets/bomb-revealed.svg') center no-repeat;
+    background-size: 3rem;
+    background-color: #071824;
+}

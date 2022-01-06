@@ -1,22 +1,27 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
+import useSound from 'use-sound';
 
+import GameContext from '../../store/game-context';
+import click from '../../assets/audio/click.mp3';
 import styles from './BetForm.module.css';
 
 function BetForm(props) {
+    const ctx = useContext(GameContext);
+
+    const [playClick] = useSound(click);
     const [enteredBet, setEnteredBet] = useState(0.00);
     const [enteredBombs, setEnteredBombs] = useState(3);
-    const [buttonText, setButtonText] = useState('Bet');
     const betChangehandler = (event) => setEnteredBet(event.target.value);
     const bombsChangehandler = (event) => setEnteredBombs(event.target.value);
 
     const submitHandler = (event) => {
         event.preventDefault();
+        playClick();
         const data = {
             bet: +enteredBet,
             bombs: +enteredBombs,
         }
         props.onStart(data);
-        setButtonText('Cashout');
     }
 
     const options = []
@@ -51,7 +56,9 @@ function BetForm(props) {
                     {options}
                 </select>
             </div>
-            <button type="submit" className={styles.startButton}>{buttonText}</button>
+            <button type="submit" className={styles.startButton}>
+                {ctx.isRunning ? 'Cashout' : 'Bet'}
+            </button>
         </form>
     );
 }
