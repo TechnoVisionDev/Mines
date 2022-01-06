@@ -2,13 +2,17 @@ import {useContext, useState} from 'react';
 import useSound from 'use-sound';
 
 import GameContext from '../../store/game-context';
-import click from '../../assets/audio/click.mp3';
+import bet from '../../assets/audio/bet.mp3';
+import cashout from '../../assets/audio/cashout.wav';
 import styles from './BetForm.module.css';
 
 function BetForm(props) {
     const ctx = useContext(GameContext);
 
-    const [playClick] = useSound(click);
+    const [playBet] = useSound(bet);
+    const [playCashout] = useSound(cashout);
+
+    const [isDisabled, setDisabled] = useState(false);
     const [enteredBet, setEnteredBet] = useState(0.00);
     const [enteredBombs, setEnteredBombs] = useState(3);
     const betChangehandler = (event) => setEnteredBet(event.target.value);
@@ -16,12 +20,22 @@ function BetForm(props) {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        playClick();
-        const data = {
-            bet: +enteredBet,
-            bombs: +enteredBombs,
+        if (!ctx.isRunning) {
+            // Bet
+            setDisabled(true);
+            playBet();
+            const data = {
+                bet: +enteredBet,
+                bombs: +enteredBombs,
+            }
+            ctx.startGame(data);
+        } else {
+            // Cashout
+            setDisabled(false);
+            setEnteredBet(0.00);
+            playCashout();
+            ctx.endGame(true);
         }
-        props.onStart(data);
     }
 
     const options = []
@@ -38,11 +52,12 @@ function BetForm(props) {
                     type="number" 
                     placeholder="0.00" 
                     className={`${styles.inputBox} ${styles.bet}`}
-                    step='0.01'
-                    min='0'
-                    max='10000000'
+                    step="0.01"
+                    min="0"
+                    max="10000000"
                     title="Please enter Alphabets."
                     onChange={betChangehandler}
+                    disabled = {(isDisabled)? "disabled" : ""}
                 />
             </div>
             <div className={styles.input}>

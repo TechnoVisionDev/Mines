@@ -9,6 +9,7 @@ function App() {
 
   const [firstGame, setFirstGame] = useState(true);
   const [isRunning, setRunning] = useState(false);
+  const [cashout, setCashout] = useState(false);
   const [gameData, setGameData] = useState({bet:0, bombs:3});
   
   const startGame = (data) => {
@@ -22,12 +23,15 @@ function App() {
       {
         firstGame: firstGame,
         isRunning: isRunning,
-        startFirstGame: () => setFirstGame(false),
-        endGame: () => setRunning(false)
+        startGame: startGame,
+        endGame: (cashout) => { 
+          setRunning(false);
+          if (cashout) { setCashout(true); }
+        }
       }
     }>
       <section className={styles.game}>
-        <Settings onStart={startGame} />
+        <Settings />
         <Board gameData={gameData} />
       </section>
     </GameContext.Provider>
