@@ -1,0 +1,57 @@
+.betForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.inputBox {
+    height: 2rem;
+    background-color: #0f212e;
+    color: white;
+    border: 2px solid #293d4b;
+    border-radius: 3px;
+    transition : border 100ms linear;
+    outline: none;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.inputBox::placeholder {
+    color: white;
+}
+
+.inputBox:hover {
+    border-color: #566f86;
+}
+
+.bet {
+    width: 12rem;
+    padding-left: 8px;
+}
+
+.mines {
+    width: 12.8rem;
+    padding-left: 4px;
+}
+
+.startButton {
+    height: 3rem;
+    background-color: #00e800;
+    border-radius: 3px;
+    border: none;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 15px;
+}
+
+.startButton:hover {
+    background-color: #1cff21;
+    cursor: pointer;
+}
