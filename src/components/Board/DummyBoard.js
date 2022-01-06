@@ -6,7 +6,7 @@ function DummyBoard() {
     for (let i=0; i<5; i++) {
         tiles[i] = [];
         for (let j=0; j<5; j++) {
-            tiles[i].push(<button className={tileStyles.button}></button>);
+            tiles[i].push(<button key={j} className={tileStyles.button}></button>);
         }
     }
 
