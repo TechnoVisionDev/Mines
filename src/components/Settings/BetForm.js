@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext} from 'react';
 import useSound from 'use-sound';
 
 import GameContext from '../../store/game-context';
@@ -8,31 +8,19 @@ import styles from './BetForm.module.css';
 
 function BetForm(props) {
     const ctx = useContext(GameContext);
-
     const [playBet] = useSound(bet);
     const [playCashout] = useSound(cashout);
 
-    const [isDisabled, setDisabled] = useState(false);
-    const [enteredBet, setEnteredBet] = useState(0.00);
-    const [enteredBombs, setEnteredBombs] = useState(3);
-    const betChangehandler = (event) => setEnteredBet(event.target.value);
-    const bombsChangehandler = (event) => setEnteredBombs(event.target.value);
-
     const submitHandler = (event) => {
         event.preventDefault();
-        if (!ctx.isRunning) {
-            // Bet
-            setDisabled(true);
-            playBet();
+        if (!ctx.isRunning) { // Start Game
             const data = {
-                bet: +enteredBet,
-                bombs: +enteredBombs,
+                bet: +event.target.bet.value,
+                bombs: +event.target.mines.value,
             }
+            playBet();
             ctx.startGame(data);
-        } else {
-            // Cashout
-            setDisabled(false);
-            setEnteredBet(0.00);
+        } else { // Cashout
             playCashout();
             ctx.endGame(true);
         }
@@ -46,6 +34,15 @@ function BetForm(props) {
     return (
         <form className={styles.betForm} onSubmit={submitHandler}>
             <div className={styles.input}>
+                <label htmlFor="balance">Balance</label>
+                <input 
+                    name="balance" 
+                    value={`$${ctx.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`} 
+                    className={`${styles.inputBox} ${styles.bet}`}
+                    disable="disabled"
+                />
+            </div>
+            <div className={styles.input}>
                 <label htmlFor="bet">Bet Amount</label>
                 <input 
                     name="bet" 
@@ -56,8 +53,6 @@ function BetForm(props) {
                     min="0"
                     max="10000000"
                     title="Please enter Alphabets."
-                    onChange={betChangehandler}
-                    disabled = {(isDisabled)? "disabled" : ""}
                 />
             </div>
             <div className={styles.input}>
@@ -66,7 +61,6 @@ function BetForm(props) {
                     name="mines" 
                     defaultValue='3' 
                     className={`${styles.inputBox} ${styles.mines}`}
-                    onChange={bombsChangehandler}
                 >
                     {options}
                 </select>
