@@ -3,7 +3,7 @@ import styles from './CashoutModal.module.css';
 
 function CashoutModal(props) {
     const {bet, bombs} = props.gameData;
-    const multiplier = Math.round((calcMultiplier(props.gems, bombs) + Number.EPSILON) * 100) / 100;
+    const multiplier = calcMultiplier(props.gems, bombs);
     const reward = calcEarnings(bet, props.gems, bombs);
     console.log(reward);
 

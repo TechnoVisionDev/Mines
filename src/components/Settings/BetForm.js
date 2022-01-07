@@ -37,7 +37,7 @@ function BetForm() {
                 <label htmlFor="balance">Balance</label>
                 <input 
                     name="balance" 
-                    value={`$${ctx.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`} 
+                    value={`$${ctx.money.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`} 
                     className={`${styles.inputBox} ${styles.bet} ${styles.disabled}`}
                     disable="disabled"
                 />
