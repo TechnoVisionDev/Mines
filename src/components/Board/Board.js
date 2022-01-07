@@ -1,11 +1,14 @@
 import { useContext } from 'react';
 
 import Tile from './Tile';
+import CashoutModal from './CashoutModal';
 import DummyBoard from './DummyBoard';
 import GameContext from '../../store/game-context';
 import styles from './Board.module.css';
+import { Fragment } from 'react/cjs/react.production.min';
 
 let tiles = [];
+let gems = 0;
 
 function Board(props) {
     const ctx = useContext(GameContext);
@@ -15,18 +18,25 @@ function Board(props) {
 
     if (ctx.isRunning) {
         const endGame = () => ctx.endGame(false);
-        const addGem = () => props.addGem();
+        const addGem = () => {
+            gems++;
+            props.addGem();
+        }
+        gems = 0;
         generateNewBoard(endGame, addGem, props.gameData);
     }
 
     return (
-        <div className={styles.board}>
-            <div>{tiles[0]}</div>
-            <div>{tiles[1]}</div>
-            <div>{tiles[2]}</div>
-            <div>{tiles[3]}</div>
-            <div>{tiles[4]}</div>
-        </div>
+        <Fragment>
+            <div className={styles.board}>
+                <div>{tiles[0]}</div>
+                <div>{tiles[1]}</div>
+                <div>{tiles[2]}</div>
+                <div>{tiles[3]}</div>
+                <div>{tiles[4]}</div>
+                {props.isCashout ? <CashoutModal gameData={props.gameData} gems={gems} /> : undefined}
+            </div>
+        </Fragment>
     );
 }
 

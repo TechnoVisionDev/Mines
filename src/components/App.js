@@ -17,6 +17,7 @@ function App() {
   const [gameData, setGameData] = useState({bet:0, bombs:3});
   
   const startGame = (data) => {
+    setCashout(false);
     setMoney(money - data.bet);
     setGameData(data);
     setRunning(true);
@@ -38,7 +39,7 @@ function App() {
     <GameContext.Provider value={{money, firstGame, isRunning, startGame, endGame}}>
       <section className={styles.game}>
         <Settings />
-        <Board gameData={gameData} addGem={addGem}/>
+        <Board gameData={gameData} addGem={addGem} isCashout={cashout}/>
       </section>
     </GameContext.Provider>
   );
