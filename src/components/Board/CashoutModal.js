@@ -3,8 +3,8 @@ import styles from './CashoutModal.module.css';
 
 function CashoutModal(props) {
     const {bet, bombs} = props.gameData;
-    const multiplier = calcMultiplier(props.gems, bombs);
-    const reward = calcEarnings(bet, props.gems, bombs);
+    const multiplier = calcMultiplier(props.gems, bombs).toFixed(2);
+    const reward = calcEarnings(bet, props.gems, bombs).toFixed(2);
     console.log(reward);
 
     return (
