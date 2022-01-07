@@ -14,7 +14,9 @@ function Board(props) {
     }
 
     if (ctx.isRunning) {
-        generateNewBoard(props.gameData);
+        const endGame = () => ctx.endGame(false);
+        const addGem = () => props.addGem();
+        generateNewBoard(endGame, addGem, props.gameData);
     }
 
     return (
@@ -28,7 +30,7 @@ function Board(props) {
     );
 }
 
-function generateNewBoard(gameData) {
+function generateNewBoard(endGame, addGem, gameData) {
     const board = Array.from(Array(5), _ => Array(5).fill(false));
     let maxBombs = gameData.bombs;
     if (maxBombs > 12) { maxBombs = 25 - maxBombs; }
@@ -42,13 +44,13 @@ function generateNewBoard(gameData) {
             bombs++;
         }
     }
-
+    
     for (let i=0; i<5; i++) {
         tiles[i] = [];
         for (let j=0; j<5; j++) {
             let hasBomb = board[i][j];
             if (gameData.bombs > 12) { hasBomb = !hasBomb };
-            tiles[i].push(<Tile key={Date.now() + '-' + j} bomb={hasBomb} />);
+            tiles[i].push(<Tile key={Date.now() + '-' + j} bomb={hasBomb} addGem={addGem} endGame={endGame} />);
         }
     }
 }

@@ -6,7 +6,7 @@ import bet from '../../assets/audio/bet.mp3';
 import cashout from '../../assets/audio/cashout.wav';
 import styles from './BetForm.module.css';
 
-function BetForm(props) {
+function BetForm() {
     const ctx = useContext(GameContext);
     const [playBet] = useSound(bet);
     const [playCashout] = useSound(cashout);
@@ -38,7 +38,7 @@ function BetForm(props) {
                 <input 
                     name="balance" 
                     value={`$${ctx.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`} 
-                    className={`${styles.inputBox} ${styles.bet}`}
+                    className={`${styles.inputBox} ${styles.bet} ${styles.disabled}`}
                     disable="disabled"
                 />
             </div>
@@ -52,7 +52,6 @@ function BetForm(props) {
                     step="0.01"
                     min="0"
                     max="10000000"
-                    title="Please enter Alphabets."
                 />
             </div>
             <div className={styles.input}>

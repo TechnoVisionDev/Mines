@@ -21,8 +21,9 @@ function Tile(props) {
             if (props.bomb) {
                 setType('bomb');
                 playExposion();
-                ctx.endGame(false);
+                props.endGame();
             } else {
+                props.addGem();
                 playSuccess();
             }
             setClicked(true);

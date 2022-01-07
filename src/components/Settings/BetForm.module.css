@@ -28,7 +28,7 @@
     color: white;
 }
 
-.inputBox:hover {
+.inputBox:not(.disabled):hover {
     border-color: #566f86;
 }
 
@@ -54,4 +54,8 @@
 .startButton:hover {
     background-color: #1cff21;
     cursor: pointer;
+}
+
+.disabled {
+    cursor: default;
 }

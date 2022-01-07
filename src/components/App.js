@@ -3,7 +3,10 @@ import {useState} from 'react';
 import Board from "./Board/Board";
 import Settings from "./Settings/Settings";
 import GameContext from '../store/game-context';
+import {calcEarnings} from '../util/multiplier';
 import styles from './App.module.css';
+
+let gems = 0;
 
 function App() {
 
@@ -22,25 +25,20 @@ function App() {
 
   const endGame = (isCashout) => {
     setRunning(false);
-    if (isCashout) { 
-      setMoney(money + gameData.bet);
+    if (isCashout) {
+      setMoney(money + calcEarnings(gameData.bet, gems, gameData.bombs));
       setCashout(true);
     }
+    gems = 0;
   }
 
+  const addGem = () => gems++;
+
   return (
-    <GameContext.Provider value={
-      {
-        money: money,
-        firstGame: firstGame,
-        isRunning: isRunning,
-        startGame: startGame,
-        endGame: endGame
-      }
-    }>
+    <GameContext.Provider value={{money, firstGame, isRunning, startGame, endGame}}>
       <section className={styles.game}>
         <Settings />
-        <Board gameData={gameData} />
+        <Board gameData={gameData} addGem={addGem}/>
       </section>
     </GameContext.Provider>
   );
