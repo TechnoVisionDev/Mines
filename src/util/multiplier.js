@@ -1,10 +1,11 @@
 export function calcMultiplier(gemsCollected, totalBombs) {
+    if (gemsCollected === 0) return 1.00;
     let numerator = 25 - totalBombs;
-    let val = numerator/25;
-    for (let i=1; i<gemsCollected; i++) {
-      val *= (numerator-i)/(25-i);
+    let val = numerator / 25;
+    for (let i = 1; i < gemsCollected; i++) {
+      val *= (numerator - i) / (25 - i);
     }
-    return round(0.989 * (1/val));
+    return round(0.989 * (1 / val));
 }
 
 export function calcEarnings(bet, gemsCollected, totalBombs) {

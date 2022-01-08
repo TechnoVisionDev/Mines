@@ -16,8 +16,6 @@ function Tile(props) {
     const [isClicked, setClicked] = useState(false);
     const [isRevealed, setRevealed] = useState(false);
 
-    console.log("HEY!");
-
     const clickHandler = () => {
         if (!isClicked) {
             if (props.bomb) {
@@ -44,7 +42,8 @@ function Tile(props) {
     return (
         <button 
             onClick={clickHandler} 
-            className={`${styles.button} ${isClicked ? `${styles[type]} ${styles.clicked}` : undefined}
+            className={`${styles.button} 
+                        ${isClicked ? `${styles[type]} ${styles.clicked}` : undefined}
                         ${isRevealed ? `${styles[type+'-revealed']}` : undefined }`}
         >
         </button>

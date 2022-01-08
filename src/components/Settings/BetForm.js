@@ -48,7 +48,8 @@ function BetForm() {
                     name="bet" 
                     type="number" 
                     placeholder="0.00" 
-                    className={`${styles.inputBox} ${styles.bet} ${error ? styles.error : undefined}`}
+                    className={`${styles.inputBox} 
+                                ${styles.bet} ${error ? styles.error : undefined}`}
                     step="0.01"
                     min="0"
                     max="10000000"
