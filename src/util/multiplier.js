@@ -15,3 +15,7 @@ export function calcEarnings(bet, gemsCollected, totalBombs) {
 export function round(num) {
     return (Math.round((num + Number.EPSILON) * 100) / 100);
 }
+
+export function addCommas(num) {
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

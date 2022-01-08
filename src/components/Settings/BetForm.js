@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import { useState, useContext } from 'react';
 import useSound from 'use-sound';
 
 import GameContext from '../../store/game-context';
@@ -8,12 +8,21 @@ import styles from './BetForm.module.css';
 
 function BetForm() {
     const ctx = useContext(GameContext);
+    
+    const [error, setError] = useState(false);
+    const betChangehandler = (event) => {
+        const bet = event.target.value;
+        if (bet > ctx.money) { setError(true); }
+        else { setError(false); }
+    }
+
     const [playBet] = useSound(bet);
     const [playCashout] = useSound(cashout);
 
     const submitHandler = (event) => {
         event.preventDefault();
         if (!ctx.isRunning) { // Start Game
+            if (error) { return; }
             const data = {
                 bet: +event.target.bet.value,
                 bombs: +event.target.mines.value,
@@ -34,24 +43,17 @@ function BetForm() {
     return (
         <form className={styles.betForm} onSubmit={submitHandler}>
             <div className={styles.input}>
-                <label htmlFor="balance">Balance</label>
-                <input 
-                    name="balance" 
-                    value={`$${ctx.money.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`} 
-                    className={`${styles.inputBox} ${styles.bet} ${styles.disabled}`}
-                    disable="disabled"
-                />
-            </div>
-            <div className={styles.input}>
                 <label htmlFor="bet">Bet Amount</label>
                 <input 
                     name="bet" 
                     type="number" 
                     placeholder="0.00" 
-                    className={`${styles.inputBox} ${styles.bet}`}
+                    className={`${styles.inputBox} ${styles.bet} ${error ? styles.error : undefined}`}
                     step="0.01"
                     min="0"
                     max="10000000"
+                    disabled={ctx.isRunning ? "disabled" : undefined}
+                    onChange={betChangehandler}
                 />
             </div>
             <div className={styles.input}>
@@ -60,6 +62,7 @@ function BetForm() {
                     name="mines" 
                     defaultValue='3' 
                     className={`${styles.inputBox} ${styles.mines}`}
+                    disabled={ctx.isRunning ? "disabled" : undefined}
                 >
                     {options}
                 </select>

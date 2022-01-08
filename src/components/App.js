@@ -38,7 +38,7 @@ function App() {
   return (
     <GameContext.Provider value={{money, firstGame, isRunning, startGame, endGame}}>
       <section className={styles.game}>
-        <Settings />
+        <Settings gameData={gameData}/>
         <Board gameData={gameData} addGem={addGem} isCashout={cashout}/>
       </section>
     </GameContext.Provider>

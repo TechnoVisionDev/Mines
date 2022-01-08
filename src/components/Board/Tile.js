@@ -16,6 +16,8 @@ function Tile(props) {
     const [isClicked, setClicked] = useState(false);
     const [isRevealed, setRevealed] = useState(false);
 
+    console.log("HEY!");
+
     const clickHandler = () => {
         if (!isClicked) {
             if (props.bomb) {

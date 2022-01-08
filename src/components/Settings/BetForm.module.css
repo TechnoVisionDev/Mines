@@ -28,7 +28,7 @@
     color: white;
 }
 
-.inputBox:not(.disabled):hover {
+.inputBox:not(.error):hover {
     border-color: #566f86;
 }
 
@@ -56,6 +56,6 @@
     cursor: pointer;
 }
 
-.disabled {
-    cursor: default;
+.error {
+    border-color: red;
 }
