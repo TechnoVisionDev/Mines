@@ -3,3 +3,10 @@
     justify-content: center;
     margin-top: 2.5rem;
 }
+
+.footer {
+    display: flex;
+    justify-content: center;
+    color: #b2bad3;
+    font-size: 15px;
+}

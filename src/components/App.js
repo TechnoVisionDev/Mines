@@ -41,6 +41,9 @@ function App() {
         <Settings gameData={gameData}/>
         <Board gameData={gameData} addGem={addGem} isCashout={cashout}/>
       </section>
+      <footer className={styles.footer}>
+        <p>&copy; 2022 TechnoVision</p>
+      </footer>
     </GameContext.Provider>
   );
 }
