@@ -38,7 +38,7 @@
   <p align="center">
     An online casino game based on Minesweeper!
     <br />
-    <a href="https://mines.herokuapp.com/"><strong>Explore this website »</strong></a>
+    <a href="https://mines-casino.herokuapp.com/"><strong>Explore this website »</strong></a>
     <br />
     <br />
     <a href="https://github.com/TechnoVisionDev/Mines/wiki">Visit Wiki</a>
