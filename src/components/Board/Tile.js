@@ -12,18 +12,16 @@ function Tile(props) {
     const [playExposion] = useSound(explosion);
     const [playSuccess] = useSound(success);
 
-    const [type, setType] = useState('gem');
     const [isClicked, setClicked] = useState(false);
     const [isRevealed, setRevealed] = useState(false);
 
     const clickHandler = () => {
         if (!isClicked) {
             if (props.bomb) {
-                setType('bomb');
                 playExposion();
-                props.endGame();
+                ctx.endGame();
             } else {
-                props.addGem();
+                ctx.addGem();
                 playSuccess();
             }
             setClicked(true);
@@ -32,13 +30,11 @@ function Tile(props) {
 
     const revealTiles = (!ctx.isRunning && !ctx.firstGame && !isClicked);
     if (revealTiles) {
-        if (props.bomb) {
-            setType('bomb');
-        }
         setClicked(true);
         setRevealed(true);
     }
 
+    const type = props.bomb ? 'bomb' : 'gem';
     return (
         <button 
             onClick={clickHandler} 

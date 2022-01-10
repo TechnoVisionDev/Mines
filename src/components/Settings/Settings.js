@@ -5,7 +5,7 @@ import GameContext from '../../store/game-context';
 import BetForm from './BetForm';
 import styles from './Settings.module.css';
 
-function Settings(props) {
+function Settings() {
     const ctx = useContext(GameContext);
     let balance = `$${addCommas(ctx.money.toFixed(2).toString())}`;
 

@@ -1,29 +1,25 @@
-import { useContext } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 
 import Tile from './Tile';
 import CashoutModal from './CashoutModal';
 import DummyBoard from './DummyBoard';
 import GameContext from '../../store/game-context';
 import styles from './Board.module.css';
-import { Fragment } from 'react/cjs/react.production.min';
+import { useState } from 'react/cjs/react.development';
 
-let tiles = [];
-let gems = 0;
-
-function Board(props) {
+function Board() {
     const ctx = useContext(GameContext);
-    if (ctx.firstGame) {
-        return (<DummyBoard />);
-    }
+    const [tiles, setTiles] = useState([]);
 
-    if (ctx.isRunning) {
-        const endGame = () => ctx.endGame(false);
-        const addGem = () => {
-            gems++;
-            props.addGem();
+    useEffect(() => {
+        if (ctx.generateBoard) {
+            setTiles(generateNewBoard(ctx.gameData));
+            ctx.preventBoardGen();
         }
-        gems = 0;
-        generateNewBoard(endGame, addGem, props.gameData);
+    }, [ctx])
+
+    if (tiles.length === 0) {
+        return (<DummyBoard />);
     }
 
     return (
@@ -34,13 +30,14 @@ function Board(props) {
                 <div>{tiles[2]}</div>
                 <div>{tiles[3]}</div>
                 <div>{tiles[4]}</div>
-                {props.isCashout ? <CashoutModal gameData={props.gameData} gems={gems} /> : undefined}
+                {ctx.cashout ? <CashoutModal /> : undefined}
             </div>
         </Fragment>
     );
 }
 
-function generateNewBoard(endGame, addGem, gameData) {
+function generateNewBoard(gameData) {
+    let tiles = [];
     const board = Array.from(Array(5), _ => Array(5).fill(false));
     let maxBombs = gameData.bombs;
     if (maxBombs > 12) { maxBombs = 25 - maxBombs; }
@@ -60,9 +57,10 @@ function generateNewBoard(endGame, addGem, gameData) {
         for (let j=0; j<5; j++) {
             let hasBomb = board[i][j];
             if (gameData.bombs > 12) { hasBomb = !hasBomb };
-            tiles[i].push(<Tile key={Date.now() + '-' + j} bomb={hasBomb} addGem={addGem} endGame={endGame} />);
+            tiles[i].push(<Tile key={Date.now() + '-' + j} bomb={hasBomb} />);
         }
     }
+    return tiles;
 }
 
 export default Board;
